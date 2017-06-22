@@ -102,6 +102,7 @@ uint16_t lastVideoSourceState;
 bool doCut = false;
 bool longCut = false;
 bool flash = false;
+bool auxLive = false;
 uint32_t lastAutoChange;
 
 void setup() {
@@ -211,7 +212,15 @@ void updateState() {
         if (modeButton.wasReleased()) {
             Serial << F("Change to Manual\n");
             modeState = manual;
-        } else {
+        } else if (vidSource2.wasReleased()) {
+            if (auxLive) {
+                auxLive = false;
+            } else {
+                auxLive = true;
+                videoSourceState = 2;
+            }
+        }
+        if(!auxLive){
             videoSourceState = updateFromMics();
         }
     } else { // modeState == manual
