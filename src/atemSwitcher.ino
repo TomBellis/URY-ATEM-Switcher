@@ -27,7 +27,7 @@ ATEMstd AtemSwitcher;
 
 #define SAMPLE_WINDOW_MS 50
 #define MIC_DEBOUNCE_MS 500
-#define MIC_THRESHOLD 512 // 0-1023 5v
+#define MIC_THRESHOLD 50 // 0-1023 5v
 
 #define CUT_LIMIT 2000 // ms
 
@@ -63,7 +63,7 @@ Button modeButton(7, PULLUP, INVERT, DEBOUNCE_MS);
 // Mapping
 const uint16_t micToVideoSource[16] = {
        // 321P Bits correspond to mics (G3 G2 G1 Pres)
-    3, // 0000 No mics
+    1, // 0000 No mics
     1, // 0001 Presenter Mic
     3, // 0010 Guest 1
     1, // 0011 P & G1
@@ -80,7 +80,7 @@ const uint16_t micToVideoSource[16] = {
     3, // 1110 G1 & G2 & G3
     3, // 1111 P & G1 & G2 & G3
 };
-const uint16_t defaultVideoSource = 3;
+const uint16_t defaultVideoSource = 1;
 
 // Network Config
 byte mac[] = {0x90, 0xA2, 0xDA, 0x0D, 0x6B, 0xB9};
@@ -275,7 +275,7 @@ void updateATEM() {
     if (modeState == automatic) {
         if (millis() - lastAutoChange > CUT_LIMIT && (videoSourceState != lastVideoSourceState)) {
             Serial << (0x0F & ~micState) << endl;
-            Serial << F("Auto change to ") << videoSourceState << endl;
+            Serial << F("Auto change to\n") << videoSourceState << endl;
             AtemSwitcher.changePreviewInput(videoSourceState);
             AtemSwitcher.doCut();
             lastAutoChange = millis();
