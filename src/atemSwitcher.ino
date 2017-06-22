@@ -27,7 +27,7 @@ ATEMstd AtemSwitcher;
 
 #define SAMPLE_WINDOW_MS 50
 #define MIC_DEBOUNCE_MS 500
-#define MIC_THRESHOLD 50 // 0-1023 5v
+#define MIC_THRESHOLD 60 // 0-1023 5v
 
 #define CUT_LIMIT 2000 // ms
 
@@ -68,11 +68,11 @@ const uint16_t micToVideoSource[16] = {
     3, // 0010 Guest 1
     1, // 0011 P & G1
     3, // 0100 G2
-    3, // 0101 P & G2
+    1, // 0101 P & G2
     3, // 0110 G1 & G2
     3, // 0111 P & G1 & G2
     3, // 1000 G3
-    3, // 1001 P & G3
+    1, // 1001 P & G3
     3, // 1010 G1 & G3
     3, // 1011 P & G1 & G3
     3, // 1100 G2 & G3
